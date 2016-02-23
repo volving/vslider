@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="public/stylesheets/main.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="vslider" id="slider" data-width="1000" data-height="800">
+            <ul class="slides">
+                <li class="slide">
+                    <a href="#"><img src="public/img/1.jpg" alt="" /></a>
+                </li>
+                <li class="slide">
+                    <a href="#"><img src="public/img/2.jpg" alt="" /></a>
+                </li>
+                <li class="slide">
+                    <a href="#"><img src="public/img/3.jpg" alt="" /></a>
+                </li>
+                <li class="slide">
+                    <a href="#"><img src="public/img/4.jpg" alt="" /></a>
+                </li>
+                <li class="slide">
+                    <a href="#"><img src="public/img/5.jpg" alt="" /></a>
+                </li>
+                <li class="slide">
+                    <a href="#"><img src="public/img/6.jpg" alt="" /></a>
+                </li>
+            </ul>
+            <ul class="indicators">
+                <li class="indicator active"></li>
+                <li class="indicator"></li>
+                <li class="indicator"></li>
+                <li class="indicator"></li>
+                <li class="indicator"></li>
+                <li class="indicator"></li>
+            </ul>
+            <div class="navs">
+                <a href="#"><span class="prev">&lt;</span></a>
+                <a href="#"><span class="next">&gt;</span></a>
+                <div class="clear"></div>
+            </div>
+            <ul class="thumbnails">
+                <li><span class="thumbnail"></span></li>
+                <li><span class="thumbnail"></span></li>
+                <li><span class="thumbnail"></span></li>
+                <li><span class="thumbnail"></span></li>
+                <li><span class="thumbnail"></span></li>
+                <li><span class="thumbnail"></span></li>
+            </ul>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="public/javascripts/jquery.vslider.js"></script>
+    <script>
+    $(function() {
+        $('.vslider').vSlider();
+    });
+    </script>
+    <script>
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35725/livereload.js?snipver=2"><\/script>');
+    </script>
+</body>
+
+</html>

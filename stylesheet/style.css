@@ -1,0 +1,49 @@
+.container{
+    display: block;
+    position: relative;
+    margin: 10px auto;
+    border: 1px solid darkolivegreen;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    min-height: 1em;
+}
+
+
+
+.vwrapper{
+    display: inline-block;
+    width: 720px;
+    height: 630px;
+    -webkit-box-shadow: 0 0 1px 0 red;
+    -moz-box-shadow: 0 0 1px 0 red;
+    box-shadow: 0 0 1px 0 red;
+    margin: 1em;
+    position: relative;
+}
+
+.vpreview{
+    display: block;
+    position: absolute;
+}
+
+ul, li{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.slides {
+    display: inline-block;
+    position: absolute;
+    height: 500px;
+    overflow: hidden;
+}
+.slide{
+    float: left;
+    display: inline-block;
+}
+.slide>a>img{
+    max-width: 706px;
+    max-height: 500px;
+    margin: 7px 7px;
+}
