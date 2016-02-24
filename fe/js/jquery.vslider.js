@@ -12,7 +12,7 @@
         magnifier: false,
         autoPlay: true,
         slideAnimation: '',
-        pause: 5000,
+        pause: 1000,
         speed: 250,
         interval: 10, // in ms
         rate: 25 // rate = speed / interval
@@ -58,9 +58,9 @@
         utils.setPosition = function() {
             // $v.attr('style', 'width:' + settings.sliderWidth + 'px; height:' + settings.sliderHeight + 'px; left:' + this.getPosition() + 'px');
             this.calcPosition();
-            var currentPosition = parseInt(v.style.left);
-            var slideSpan = (currentPosition < settings.position) ? settings.slideSpan : -(settings.slideSpan);
-            console.log('currentPosition:', currentPosition, '\nslideSpan:', slideSpan, '\nsettings.position:', settings.position);
+            // var currentPosition = parseInt(v.style.left);
+            // var slideSpan = (currentPosition < settings.position) ? settings.slideSpan : -(settings.slideSpan);
+            // console.log('currentPosition:', currentPosition, '\nslideSpan:', slideSpan, '\nsettings.position:', settings.position);
             // var slide_animate = function() {
             //     if (currentPosition === settings.position) {
             //         clickSemophore = true;
@@ -72,7 +72,14 @@
             //     }
             // };
             // slide_animate();
-            $v.animate({left: settings.position}, settings.speed, 'swing');
+            // console.log(settings.index + '/' + settings.slideAmount);
+            $v.animate({ left: settings.position }, settings.speed, 'swing', function() {
+                if (settings.index === (settings.slideAmount + 1)) {
+                    settings.index = 1;
+                    v.style.left = utils.calcPosition() + 'px';
+                }
+            });
+
 
         };
         utils.setThumbnail = function() {
@@ -113,12 +120,9 @@
         // prev / next
         utils.count = function() {
             var span = arguments[0] || 1;
-            if (span > 0) {
-                settings.index = (settings.index + 1) % (settings.slideAmount + 1) || 1;
-            } else { //span = -1
-                settings.index = (settings.index - 1) % (settings.slideAmount + 1) || settings.slideAmount;
-            }
-
+            span = (span > 0) ? 1 : -1;
+            console.log(settings.index);
+            settings.index = (settings.index + span) % (settings.slideAmount + 2);
         }
         utils.slides = function() {
             clickSemophore = false;
@@ -136,10 +140,16 @@
         utils.pause = function() {
             clearInterval(slideInterval);
         };
+        utils.bindEventHandler = function() {
+            $s.on('mouseover', utils.pause).on('mouseleave', utils.play);
+        };
         // -----------------------------------------------End __of Setting up configures
+
         utils.init();
+        utils.bindEventHandler();
         utils.play();
-        // utils.pause();
+
+
     };
 
 
