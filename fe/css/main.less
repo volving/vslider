@@ -36,9 +36,11 @@ li {
     display: inline-block;
     overflow: hidden;
     position: relative;
+    z-index: 1;
     .slides {
         display: block;
         position: absolute;
+        z-index: 1;
         .slide {
             display: inline-block;
             position: relative;
@@ -46,11 +48,69 @@ li {
         }
     }
     .indicators {
+        display: block;
+        position: absolute;
+        height: 1em;
+        width: 100%;
+        bottom: 1em;
         .indicator {}
     }
     .navs {
-        .prev {}
-        .next {}
+        display: block;
+        position: absolute;
+        height: 5em;
+        width: 100%;
+        top: 50%;
+        margin-top: -2.5em;
+        z-index: 1;
+        background-color: none;
+        line-height: 5em;
+        font-size: 2em;
+        a {
+            text-decoration: none;
+        }
+        .prev,
+        .next {
+            display: inline-block;
+            width: 2em;
+            color: rgba(128, 128, 128, 0.2);
+            background-color: rgba(64, 64, 64, 0.1);
+            text-align: center;
+            font-weight: 800;
+                -webkit-transition: all 0.5s linear;
+                   -moz-transition: all 0.5s linear;
+                    -ms-transition: all 0.5s linear;
+                     -o-transition: all 0.5s linear;
+                        transition: all 0.5s linear;
+            &:hover {
+                color: rgba(255, 255, 255, 0.7);
+                background-color: rgba(0, 0, 0, 0.4);
+                -webkit-transition: all 0.5s linear;
+                   -moz-transition: all 0.5s linear;
+                    -ms-transition: all 0.5s linear;
+                     -o-transition: all 0.5s linear;
+                        transition: all 0.5s linear;
+            }
+        }
+        .prev {
+            float: left;
+            -webkit-border-top-right-radius: 5px;
+            border-top-right-radius: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .next {
+            float: right;
+            -webkit-border-top-left-radius: 5px;
+            border-top-left-radius: 5px;
+            -webkit-border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+    }
+    &:hover {
+        .navs {
+            visibility: visible;
+        }
     }
     .thumbnails {
         .thumbnail {}
