@@ -47,6 +47,9 @@ module.exports = function(grunt) {
                 src: ['<%= config.src_js %>/**/*.js']
             }
         },
+        uglify:{
+
+        },
         less: {
             target: {
                 options: {

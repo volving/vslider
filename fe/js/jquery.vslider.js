@@ -28,10 +28,8 @@
             s = $s[0],
             $n = this.children('.navs'),
             $i = this.children('.indicator'),
-            $iArray,
             $t = this.siblings('.thumbnails'),
             t,
-            $tArray,
             inlineSettings = {},
             settings = {},
             slideArray,
@@ -55,7 +53,8 @@
         var utils = {};
 
         utils.calcPosition = function() {
-            return settings.position = -(settings.index * settings.slideWidth);
+            settings.position = -(settings.index * settings.slideWidth);
+            return settings.position;
         };
         utils.setSlideSize = function() {
             $s.children('.slide').children('a').children('img').css({ width: settings.slideWidth + 'px', height: settings.slideHeight + 'px' });
@@ -80,8 +79,8 @@
             });
         };
         utils.initSlides = function() {
-            var first = $s.find('li:first-child').clone()
-            var last = $s.find('li:last-child').clone()
+            var first = $s.find('li:first-child').clone();
+            var last = $s.find('li:last-child').clone();
             first.appendTo($s);
             last.prependTo($s);
             utils.setSlideSize();
@@ -163,7 +162,11 @@
             }
             utils.pause();
             clearTimeout(slideRestartTimeoutId); // restart sliding
-            jumpTo ? settings.index = steps : utils.countIndex(steps);
+            if (jumpTo) {
+                settings.index = steps;
+            } else {
+                utils.countIndex(steps);
+            }
             utils.setPosition();
             slideRestartTimeoutId = setTimeout(utils.play, settings.interval);
         };
@@ -180,14 +183,13 @@
             }
         };
         utils.play = function() {
-            console.log(settings);
-            slideIntervalID = setInterval(function() {
+            slideIntervalId = setInterval(function() {
                 utils.slides();
             }, settings.pause);
             clickSemophore = true;
         };
         utils.pause = function() {
-            clearInterval(slideIntervalID);
+            clearInterval(slideIntervalId);
         };
         utils.bindEventHandler = function() {
             $s.on('mouseover', utils.pause).on('mouseleave', utils.play);
@@ -207,7 +209,7 @@
                 $t.children('.thumbnail').on('click', function() {
                     var i = parseInt($(this).attr('data-index'));
                     utils.navTo(i);
-                })
+                });
             }
         };
         // -----------------------------------------------End __of Setting up configures
