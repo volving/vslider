@@ -137,7 +137,7 @@
             utils.setPosition();
             clickSemophore = true;
         };
-        utils.swap = function(steps) {
+        utils.swap = function(steps, isNavTo) {
             if (clickSemophore) {
                 clickSemophore = false;
             } else {
@@ -145,7 +145,7 @@
             }
             utils.pause();
             clearTimeout(slideRestartTimeoutId); // restart sliding
-            utils.countIndex(steps);
+            isNavTo? settings.index = steps : utils.countIndex(steps);
             utils.setPosition();
             slideRestartTimeoutId = setTimeout(utils.play, settings.interval);
         };
@@ -154,6 +154,12 @@
         };
         utils.next = function() {
             utils.swap(1);
+        };
+
+        utils.navTo = function(index){
+            if (index > 0 && index <= settings.slideAmount) {
+                utils.swap(index, true);
+            }
         };
         utils.play = function() {
             slideIntervalID = setInterval(function() {
@@ -171,6 +177,12 @@
             }
             if ($next) {
                 $next.on('click', utils.next);
+            }
+            if ($i) {
+                var $liArray = $i.children('.indicator').on('click', function(){
+                    var i = parseInt($(this).attr('data-index'));
+                    utils.navTo(i);
+                });
             }
         };
         // -----------------------------------------------End __of Setting up configures
