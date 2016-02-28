@@ -9,6 +9,8 @@
         next: true,
         indicator: true,
         thumbnail: true,
+        thumbnailAmount: 6,
+        thumbnailWidth: this.slideWidth / this.thumbnailAmount,
         magnifier: false,
         autoPlay: true,
         slideAnimation: '',
@@ -24,9 +26,12 @@
             v = $v[0],
             $s = $v.children('.slides'),
             s = $s[0],
-            $i = this.children('.indicator'),
             $n = this.children('.navs'),
-            $t = this.children('.thumbnails'),
+            $i = this.children('.indicator'),
+            $iArray,
+            $t = this.siblings('.thumbnails'),
+            t,
+            $tArray,
             inlineSettings = {},
             settings = {},
             slideArray,
@@ -44,7 +49,6 @@
             settings.slideAmount = slideArray.length;
             settings.slidesWidth = settings.slideWidth * (settings.slideAmount + 2);
             settings.sliderHeight = settings.slideHeight;
-            settings.slideSpan = settings.slideWidth / settings.rate;
         } else {
             return;
         }
@@ -56,6 +60,7 @@
         utils.setSlideSize = function() {
             $s.children('.slide').children('a').children('img').css({ width: settings.slideWidth + 'px', height: settings.slideHeight + 'px' });
             v.style.width = settings.slideWidth + 'px';
+            v.style.height = settings.slideHeight + 'px';
             s.style.width = settings.slidesWidth + 'px';
             s.style.left = utils.calcPosition() + 'px';
         };
@@ -93,19 +98,32 @@
 
         };
         utils.initIndicators = function() {
-            var $indicators = $('<ul class="indicators"></ul>');
+            $i = $('<ul class="indicators"></ul>');
             var amt = settings.slideAmount;
             if (amt) {
 
                 for (var i = 1; i <= amt; i++) {
-                    $indicators.append('<li class="indicator" data-index="' + i + '"></li>');
+                    $i.append('<li class="indicator" data-index="' + i + '"></li>');
                 }
-                $indicators.find('.indicator:first-child').addClass('active');
+                $i.find('.indicator:first-child').addClass('active');
             }
-            $i = $indicators.appendTo($v);
+            $s.after($i);
         };
         utils.initThumbnails = function() {
+            var shadowWidth = 2,
+                shadowWidths = shadowWidth * 2,
+                tmp;
 
+            if ($t) {
+                settings.thumbnailAmount = parseInt($t.attr('data-amount')) || 6;
+                // settings.thumbnailWidth = (settings.slideWidth - settings.thumbnailAmount*(shadowWidth<<1)) / settings.thumbnailAmount;
+                settings.thumbnailWidth = (settings.slideWidth / settings.thumbnailAmount) - shadowWidths; //2px for box-shadow
+                t = $t[0];
+                t.style.width = settings.slideWidth;
+
+                tmp = $t.css({ width: settings.slideWidth }).find('.thumb').css({ width: settings.thumbnailWidth }).css('height');
+                $t.css('height', parseInt(tmp) + shadowWidths).find('li').first().addClass('active');
+            }
         };
         utils.init = function() {
             utils.initSlides();
@@ -119,7 +137,7 @@
         };
 
         utils.setThumbnail = function() {
-            $i.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
+            $t.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
         };
         utils.countIndex = function(steps) {
             steps = parseInt(steps);
@@ -137,7 +155,7 @@
             utils.setPosition();
             clickSemophore = true;
         };
-        utils.swap = function(steps, isNavTo) {
+        utils.swap = function(steps, jumpTo) {
             if (clickSemophore) {
                 clickSemophore = false;
             } else {
@@ -145,7 +163,7 @@
             }
             utils.pause();
             clearTimeout(slideRestartTimeoutId); // restart sliding
-            isNavTo? settings.index = steps : utils.countIndex(steps);
+            jumpTo ? settings.index = steps : utils.countIndex(steps);
             utils.setPosition();
             slideRestartTimeoutId = setTimeout(utils.play, settings.interval);
         };
@@ -156,12 +174,13 @@
             utils.swap(1);
         };
 
-        utils.navTo = function(index){
+        utils.navTo = function(index) {
             if (index > 0 && index <= settings.slideAmount) {
                 utils.swap(index, true);
             }
         };
         utils.play = function() {
+            console.log(settings);
             slideIntervalID = setInterval(function() {
                 utils.slides();
             }, settings.pause);
@@ -179,10 +198,16 @@
                 $next.on('click', utils.next);
             }
             if ($i) {
-                var $liArray = $i.children('.indicator').on('click', function(){
+                $i.children('.indicator').on('click', function() {
                     var i = parseInt($(this).attr('data-index'));
                     utils.navTo(i);
                 });
+            }
+            if ($t) {
+                $t.children('.thumbnail').on('click', function() {
+                    var i = parseInt($(this).attr('data-index'));
+                    utils.navTo(i);
+                })
             }
         };
         // -----------------------------------------------End __of Setting up configures

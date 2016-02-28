@@ -24,22 +24,25 @@ li {
     margin-left: auto;
     margin-right: auto;
     width: 640px;
-    height: 400px;
+    height: 500px;
     -webkit-box-shadow: 0 0 2px 2px red;
     box-shadow: 0 0 2px 2px red;
     overflow: hidden;
 }
 
 .vslider {
-    width: 100%;
-    height: 100%;
-    display: block;
-    -ms-overflow-x: hidden;
-    overflow-x: hidden;
-    -ms-overflow-y: visible;
-    overflow-y: visible;
+    // width: 100%;
+    // height: 100%;
+    width: 640px;
+    height: 400px;
+    margin: 0 auto;
+    display: inline-block;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+    clear: right;
+    -webkit-box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.6);
+    box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.6);
     .slides {
         display: block;
         position: absolute;
@@ -110,7 +113,7 @@ li {
     .indicators {
         display: block;
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         height: 1em;
         width: 100%;
         bottom: 1em;
@@ -149,18 +152,31 @@ li {
             transition: all 0.3s linear;
         }
     }
-    .thumbnails {
-        display: block;
-        position: absolute;
-        z-index: 1;
-        width: 100%;
-        height: 100px;
-        background-color: red;
-        bottom: -110px;
-        .thumbnail {
+}
+
+.thumbnails {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    height: 100px;
+    // background-color: red;
+    float: left;
+    // bottom: -110px;
+    .thumbnail {
+        display: inline-block;
+        float:left;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        margin: 2px;
+        img {
+            width: 100px;
+            float: left;
+        }
+        &.active {
             img {
-                width: 100px;
-                float: left;
+                -webkit-box-shadow: 0 0 2px 2px rgba(64, 64, 64, 0.9);
+                box-shadow: 0 0 2px 2px rgba(64, 64, 64, 0.9);
             }
         }
     }
