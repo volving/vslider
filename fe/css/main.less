@@ -50,10 +50,44 @@ li {
     .indicators {
         display: block;
         position: absolute;
+        z-index: 1;
         height: 1em;
         width: 100%;
         bottom: 1em;
-        .indicator {}
+        text-align: center;
+        .indicator {
+            display: inline-block;
+            border: 0.2em solid rgba(128, 128, 128, 0.2);
+            background-color: rgba(255, 255, 255, 0.3);
+            margin: 0.2em;
+            width: 0.3em;
+            height: 0.3em;
+            -webkit-border-radius: 50%;
+            border-radius: 50%;
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -ms-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+            &:hover {
+                border: 0.2em solid white;
+                background-color: rgba(192, 128, 128, 0.5);
+                -webkit-transition: all 0.3s linear;
+                -moz-transition: all 0.3s linear;
+                -ms-transition: all 0.3s linear;
+                -o-transition: all 0.3s linear;
+                transition: all 0.3s linear;
+            }
+        }
+        .active {
+            border: 0.2em solid white;
+            background-color: rgba(192, 128, 128, 0.5);
+            -webkit-transition: all 0.3s linear;
+            -moz-transition: all 0.3s linear;
+            -ms-transition: all 0.3s linear;
+            -o-transition: all 0.3s linear;
+            transition: all 0.3s linear;
+        }
     }
     .navs {
         display: block;
@@ -77,19 +111,19 @@ li {
             background-color: rgba(64, 64, 64, 0.1);
             text-align: center;
             font-weight: 800;
-                -webkit-transition: all 0.5s linear;
-                   -moz-transition: all 0.5s linear;
-                    -ms-transition: all 0.5s linear;
-                     -o-transition: all 0.5s linear;
-                        transition: all 0.5s linear;
+            -webkit-transition: all 0.5s linear;
+            -moz-transition: all 0.5s linear;
+            -ms-transition: all 0.5s linear;
+            -o-transition: all 0.5s linear;
+            transition: all 0.5s linear;
             &:hover {
                 color: rgba(255, 255, 255, 0.7);
                 background-color: rgba(0, 0, 0, 0.4);
                 -webkit-transition: all 0.5s linear;
-                   -moz-transition: all 0.5s linear;
-                    -ms-transition: all 0.5s linear;
-                     -o-transition: all 0.5s linear;
-                        transition: all 0.5s linear;
+                -moz-transition: all 0.5s linear;
+                -ms-transition: all 0.5s linear;
+                -o-transition: all 0.5s linear;
+                transition: all 0.5s linear;
             }
         }
         .prev {

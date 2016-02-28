@@ -7,7 +7,7 @@
         slidesNum: 0,
         prev: true,
         next: true,
-        indecator: true,
+        indicator: true,
         thumbnail: true,
         magnifier: false,
         autoPlay: true,
@@ -57,34 +57,29 @@
             $s.children('.slide').children('a').children('img').css({ width: settings.slideWidth + 'px', height: settings.slideHeight + 'px' });
             v.style.width = settings.slideWidth + 'px';
             s.style.width = settings.slidesWidth + 'px';
-            s.style.left = this.calcPosition() + 'px';
+            s.style.left = utils.calcPosition() + 'px';
         };
         utils.setPosition = function() {
-            this.calcPosition();
+            utils.calcPosition();
             $s.animate({ left: settings.position + 'px' }, settings.speed, 'swing', function() {
                 if (settings.index === (settings.slideAmount + 1)) {
                     settings.index = 1;
                 } else if (settings.index === 0) {
                     settings.index = settings.slideAmount;
                 }
+
+                if (settings.indicator) { utils.setIndicator(); }
+                if (settings.thumbnail) { utils.setThumbnail(); }
                 s.style.left = utils.calcPosition() + 'px';
+
             });
-        };
-        utils.setThumbnail = function() {
-            $i.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
-        };
-        utils.setIndicator = function() {
-            $i.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
         };
         utils.initSlides = function() {
             var first = $s.find('li:first-child').clone()
             var last = $s.find('li:last-child').clone()
             first.appendTo($s);
             last.prependTo($s);
-            this.setSlideSize();
-
-        };
-        utils.initIndicators = function() {
+            utils.setSlideSize();
 
         };
         utils.initNavs = function() {
@@ -97,19 +92,34 @@
             $next = $navs.find('.next');
 
         };
+        utils.initIndicators = function() {
+            var $indicators = $('<ul class="indicators"></ul>');
+            var amt = settings.slideAmount;
+            if (amt) {
+
+                for (var i = 1; i <= amt; i++) {
+                    $indicators.append('<li class="indicator" data-index="' + i + '"></li>');
+                }
+                $indicators.find('.indicator:first-child').addClass('active');
+            }
+            $i = $indicators.appendTo($v);
+        };
         utils.initThumbnails = function() {
 
         };
         utils.init = function() {
-            this.initSlides();
-            this.initNavs();
-            if (settings.indicator) { this.initIndicators(); }
-            if (settings.thumbnail) { this.initThumbnails(); }
+            utils.initSlides();
+            utils.initNavs();
+            if (settings.indicator) { utils.initIndicators(); }
+            if (settings.thumbnail) { utils.initThumbnails(); }
         };
-        utils.setCss = function() {
-            this.setPosition();
-            if (settings.indicator) { this.setIndicator(); }
-            if (settings.thumbnail) { this.setThumbnail(); }
+
+        utils.setIndicator = function() {
+            $i.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
+        };
+
+        utils.setThumbnail = function() {
+            $i.children('li:nth-child(' + settings.index + ')').addClass('active').siblings().removeClass('active');
         };
         utils.countIndex = function(steps) {
             steps = parseInt(steps);
@@ -118,14 +128,13 @@
 
         };
         utils.slides = function() {
-            // clickSemophore ? clickSemophore = false : return;
             if (clickSemophore) {
                 clickSemophore = false;
             } else {
                 return;
             }
-            this.countIndex();
-            this.setCss();
+            utils.countIndex();
+            utils.setPosition();
             clickSemophore = true;
         };
         utils.swap = function(steps) {
@@ -135,10 +144,9 @@
                 return;
             }
             utils.pause();
-            clearTimeout(slideRestartTimeoutId);// restart sliding
-            console.log('settings.index:', settings.index, steps);
-            this.countIndex(steps);
-            this.setCss();
+            clearTimeout(slideRestartTimeoutId); // restart sliding
+            utils.countIndex(steps);
+            utils.setPosition();
             slideRestartTimeoutId = setTimeout(utils.play, settings.interval);
         };
         utils.prev = function() {
