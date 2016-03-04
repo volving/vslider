@@ -1,5 +1,6 @@
 (function($, window, document, undefined) {
     var defaults = {
+        autoSlide: true,
         loop: true,
         slideWidth: 400,
         slideHeight: 400,
@@ -219,7 +220,9 @@
         // -----------------------------------------------End __of Setting up configures
         utils.init();
         utils.bindEventHandler();
-        utils.play();
+        if (settings.autoSlide) {
+            utils.play();
+        }
     };
 
 })(jQuery);
