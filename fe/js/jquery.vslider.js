@@ -1,6 +1,5 @@
 (function($, window, document, undefined) {
     var defaults = {
-        autoSlide: true,
         loop: true,
         slideWidth: 400,
         slideHeight: 400,
@@ -9,7 +8,7 @@
         prev: true,
         next: true,
         indicator: true,
-        thumbnail: true,
+        thumbnail: false,
         thumbnailAmount: 6,
         thumbnailWidth: this.slideWidth / this.thumbnailAmount,
         magnifier: false,
@@ -34,10 +33,10 @@
             settings = {},
             slideArray,
             slideIntervalId,
-            slideRestartTimeoutId,
             clickSemophore = true,
             $prev,
-            $next;
+            $next,
+            toPlay = true;
         // -----------------------------------------------Start of collect inline settings
 
         inlineSettings.slideWidth = parseInt($v.attr('data-width')) || 0;
@@ -50,7 +49,6 @@
             settings.index = 1;
             settings.slideAmount = slideArray.length;
             settings.slidesWidth = settings.slideWidth * (settings.slideAmount + 2);
-            // settings.sliderHeight = settings.slideHeight;
         } else {
             return;
         }
@@ -163,14 +161,13 @@
                     return;
                 }
                 utils.pause();
-                clearTimeout(slideRestartTimeoutId); // restart sliding
                 if (jumpTo) {
                     settings.index = steps;
                 } else {
                     utils.countIndex(steps);
                 }
                 utils.setPosition();
-                slideRestartTimeoutId = setTimeout(utils.play, settings.interval);
+                clickSemophore = true;
             },
             prev: function() {
                 utils.swap(-1);
@@ -178,7 +175,6 @@
             next: function() {
                 utils.swap(1);
             },
-
             navTo: function(index) {
                 if (index > 0 && index <= settings.slideAmount) {
                     utils.swap(index, true);
@@ -196,7 +192,9 @@
                 clearInterval(slideIntervalId);
             },
             bindEventHandler: function() {
-                $sc.on('mouseover', utils.pause).on('mouseleave', utils.play);
+                if (settings.autoPlay) {
+                    $sc.on('mouseover', utils.pause).on('mouseleave', utils.play);
+                }
                 if ($prev) {
                     $prev.on('click', utils.prev);
                 }
@@ -220,7 +218,7 @@
         // -----------------------------------------------End __of Setting up configures
         utils.init();
         utils.bindEventHandler();
-        if (settings.autoSlide) {
+        if (settings.autoPlay) {
             utils.play();
         }
     };
