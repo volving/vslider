@@ -35,8 +35,7 @@
             slideIntervalId,
             clickSemophore = true,
             $prev,
-            $next,
-            toPlay = true;
+            $next;
         // -----------------------------------------------Start of collect inline settings
 
         inlineSettings.slideWidth = parseInt($v.attr('data-width')) || 0;
