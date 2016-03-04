@@ -28,28 +28,34 @@ li {
   overflow: hidden;
 }
 .vslider {
-  width: 640px;
+  z-index: 1;
+  display: block;
+  width: 100%;
   height: 400px;
   margin: 0 auto;
-  display: inline-block;
   position: relative;
-  z-index: 1;
-  overflow: hidden;
   clear: right;
   -webkit-box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.6);
   box-shadow: 0 0 2px 2px rgba(128, 128, 128, 0.6);
 }
-.vslider .slides {
+.vslider .slideContainer {
+  z-index: 1;
+  overflow: hidden;
+  display: block;
+  position: absolute;
+}
+.vslider .slideContainer .slides {
   display: block;
   position: absolute;
   z-index: 1;
+  overflow: hidden;
 }
-.vslider .slides .slide {
+.vslider .slideContainer .slides .slide {
   display: inline-block;
   position: relative;
   float: left;
 }
-.vslider .navs {
+.vslider .slideContainer .navs {
   display: block;
   position: absolute;
   height: 5em;
@@ -61,11 +67,11 @@ li {
   line-height: 5em;
   font-size: 2em;
 }
-.vslider .navs a {
+.vslider .slideContainer .navs a {
   text-decoration: none;
 }
-.vslider .navs .prev,
-.vslider .navs .next {
+.vslider .slideContainer .navs .prev,
+.vslider .slideContainer .navs .next {
   display: inline-block;
   width: 2em;
   color: rgba(128, 128, 128, 0.2);
@@ -78,8 +84,8 @@ li {
   -o-transition: all 0.5s linear;
   transition: all 0.5s linear;
 }
-.vslider .navs .prev:hover,
-.vslider .navs .next:hover {
+.vslider .slideContainer .navs .prev:hover,
+.vslider .slideContainer .navs .next:hover {
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(0, 0, 0, 0.4);
   -webkit-transition: all 0.5s linear;
@@ -88,24 +94,24 @@ li {
   -o-transition: all 0.5s linear;
   transition: all 0.5s linear;
 }
-.vslider .navs .prev {
+.vslider .slideContainer .navs .prev {
   float: left;
   -webkit-border-top-right-radius: 5px;
   border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-.vslider .navs .next {
+.vslider .slideContainer .navs .next {
   float: right;
   -webkit-border-top-left-radius: 5px;
   border-top-left-radius: 5px;
   -webkit-border-bottom-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-.vslider:hover .navs {
+.vslider .slideContainer:hover .navs {
   visibility: visible;
 }
-.vslider .indicators {
+.vslider .slideContainer .indicators {
   display: block;
   position: absolute;
   z-index: 2;
@@ -114,7 +120,7 @@ li {
   bottom: 1em;
   text-align: center;
 }
-.vslider .indicators .indicator {
+.vslider .slideContainer .indicators .indicator {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -133,7 +139,7 @@ li {
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
-.vslider .indicators .indicator:hover {
+.vslider .slideContainer .indicators .indicator:hover {
   border: 2px solid #CCC;
   background-color: #fc673d;
   -webkit-transition: all 0.3s linear;
@@ -142,7 +148,7 @@ li {
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
-.vslider .indicators .active {
+.vslider .slideContainer .indicators .active {
   border: 2px solid #CCC;
   background-color: #fc673d;
   -webkit-transition: all 0.3s linear;
@@ -151,14 +157,16 @@ li {
   -o-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
-.thumbnails {
-  display: block;
-  position: absolute;
+.vslider .thumbnails {
   z-index: 2;
+  display: block;
   height: 100px;
-  float: left;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 100%;
 }
-.thumbnails .thumbnail {
+.vslider .thumbnails .thumbnail {
   display: inline-block;
   float: left;
   -webkit-box-sizing: border-box;
@@ -166,12 +174,12 @@ li {
   box-sizing: border-box;
   margin: 2px;
 }
-.thumbnails .thumbnail img {
+.vslider .thumbnails .thumbnail img {
   width: 100px;
   float: left;
   opacity: 0.6;
 }
-.thumbnails .thumbnail.active img {
+.vslider .thumbnails .thumbnail.active img {
   -webkit-box-shadow: 0 0 2px 2px rgba(64, 64, 64, 0.9);
   box-shadow: 0 0 2px 2px rgba(64, 64, 64, 0.9);
   opacity: 1;
